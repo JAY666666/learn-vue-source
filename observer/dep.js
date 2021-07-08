@@ -2,10 +2,11 @@
 抽象收集的依赖类
 依赖的方法
 */
-
+let id = 0;
 export default class Dep {
   constructor() {
     this.subs = [];
+    this.id = id++;
   }
 
   // 添加依赖
@@ -21,7 +22,7 @@ export default class Dep {
   // 如果存在依赖将其添加
   depend() {
     if (window.target) {
-      this.addSub(window.target);
+      window.target.addDep(this); //把去重依赖判断放在了watcher里
     }
   }
 

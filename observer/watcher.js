@@ -2,6 +2,8 @@ export default class Watcher {
   constructor(vm, expOrFn, cb) {
     this.vm = vm;
     this.cb = cb; //回调
+    this.deps = [];
+    this.depIds = [];
     this.expOrFn = expOrFn //目前只考虑表达式 不考虑函数
     this.value = this.get();
   }
@@ -12,6 +14,13 @@ export default class Watcher {
     window.target = undefined; // 然后清空
     return value; //返回获取的值
   }
+
+  addDep(dep) {
+    if (this.depIds.includes(dep.id)) return;
+    this.depIds.push(dep.id);
+    this.deps.push(dep);
+    dep.addSub(this);
+}
 
   update() {
     const oldValue = this.value;
