@@ -8,15 +8,18 @@ export default class Dep {
     this.subs = [];
     this.id = id++;
   }
-
-  // 添加依赖
+  
+  //添加依赖
   addSub(sub) {
     this.subs.push(sub);
   }
 
   // 删除依赖
   removeSub(sub) {
-    remove(this.subs, sub);
+    const index = this.subs.indexOf(sub);
+    if (index > -1) {
+      this.subs.splice(index, 1);
+    }
   }
 
   // 如果存在依赖将其添加
@@ -31,15 +34,6 @@ export default class Dep {
     const subs = this.subs.slice();
     for (let i = 0; i < subs.length; i++) {
       subs[i].update();
-    }
-  }
-}
-
-function remove(arr, item) {
-  if (arr.length) {
-    const index = arr.indexOf(item);
-    if (index > -1) {
-      return arr.splice(index, 1);
     }
   }
 }

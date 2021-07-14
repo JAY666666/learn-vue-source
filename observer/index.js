@@ -11,7 +11,6 @@ export default class Observer {
 
     this.dep = new Dep(); //存放数组依赖
     def(value, "_ob_", this); //新增一个不可枚举的属性"_ob_",值为当前observer,可以作为判断是否是响应式数据
-    console.log(value)
     if (Array.isArray(value)) {
       const augment = hasProto ? protoAugment : copyAugment; //对浏览器是否支持_proto_做处理
       augment(value, arrayMethods, arrayKeys); // 把数据的_proto_属性设置为拦截器arratMethods方法
